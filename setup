@@ -1,0 +1,18 @@
+#project env
+
+## support linux\macOs
+## abut tensorflow version
+1.8-1.13.1 should all works,I use tf1.13.1 beacuse my GPU is RTX 2080
+
+##use conda create python env
+conda create -n chineseocr python=3.6.6 pip scipy numpy jupyter ipython
+source activate chineseocr
+git submodule init && git submodule update
+pip install easydict opencv-contrib-python==4.0.0.21 Cython h5py lmdb mahotas pandas requests bs4 matplotlib lxml -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install -U pillow -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install keras==2.1.5 tensorflow==1.13.1 tensorflow-gpu==1.13.1
+pip install web.py==0.40.dev0
+#conda install pytorch torchvision -c pytorch
+## pip install torch torchvision
+# if you want to use cpython or gpu nms do this:
+pushd text/detector/utils && sh make.sh && popd
