@@ -82,6 +82,12 @@ class DensenetOcr:
 
     def recognize(self, img):
 
+        """
+        the method which to use
+        :param img:
+        :return: chinese character that in the image
+        """
+
         y_pred = self.runimg(img)
         y_pred = y_pred[:, :, :]
 
@@ -114,6 +120,12 @@ class DensenetOcr:
         return out
 
     def decode_to_id(self, pred):
+        """
+        first decode to id ,then to char ,
+         only to calculate acc ....you can directly use recognize
+        :param pred:
+        :return:
+        """
         id_list = []
         pred_text = pred.argmax(axis=2)[0]
         for i in range(len(pred_text)):
@@ -122,7 +134,13 @@ class DensenetOcr:
                 id_list.append(pred_text[i])
         return id_list
 
+
     def id_to_char(self, id_list):
+        """
+        id to char
+        :param id_list:
+        :return:
+        """
         char_list = []
         for i in range(len(id_list)):
             char_list.append(characters[id_list[i]])
