@@ -8,6 +8,7 @@ see setup
 url：https://pan.baidu.com/s/1gm0Uq_sLe00En-IbUPiQUg 
 password ：qcco 
 
+put the model file in project_root/chinese_ocr/models/densenet_base_model/1
 
 # test
 python demo.py
