@@ -1,6 +1,14 @@
 # chinese_ocr
 yolo3 + densenet ocr
 
+# setup 
+see setup
+
+# dowon model 
+url：https://pan.baidu.com/s/1gm0Uq_sLe00En-IbUPiQUg 
+password ：qcco 
+
+
 # test
 python demo.py
 
@@ -12,7 +20,8 @@ python demo.py
 2. add framework to easy train on your own dataset
    * add yolo3 train code
    * make the code can be  easy use on other dataset
-   
+ 
+  
    
 # Reference
 https://github.com/chineseocr/chineseocr
