@@ -15,4 +15,12 @@ pip install web.py==0.40.dev0
 #conda install pytorch torchvision -c pytorch
 ## pip install torch torchvision
 # if you want to use cpython or gpu nms do this:
-pushd text/detector/utils && sh make.sh && popd
+cd text/detector/utils
+
+cython cython_nms.pyx
+cython gpu_nms.pyx
+python setup.py build_ext --inplace
+mv utils/* ./
+rm -rf build
+rm -rf utils
+

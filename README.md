@@ -39,6 +39,7 @@ https://github.com/JarveeLee/SynthText_Chinese_version
 1. use pretrain model to detect word
    * add demo   &radic;
    * add densenet training code &radic;
+   * test gpu nms &radic;
    * generate my own dataset
  
 2. add framework to easy train on your own dataset
