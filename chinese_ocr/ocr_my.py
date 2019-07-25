@@ -82,7 +82,7 @@ def charRec(img, text_recs, adjust=False):
 
 def model(img, adjust=False):
     """
-    @img: 图片
+    @img: 图片  image = np.array(Image.open(image_file).convert('RGB'))
     @adjust: 是否调整文字识别结果
     """
     cfg_from_file('./ctpn/ctpn/text.yml')

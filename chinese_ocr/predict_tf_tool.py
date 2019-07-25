@@ -103,7 +103,7 @@ class DensenetOcr:
         for i in range(len(pred_text)):
             if pred_text[i] != nclass - 1 and (
                     (not (i > 0 and pred_text[i] == pred_text[i - 1])) or (i > 1 and pred_text[i] == pred_text[i - 2])):
-                print(pred_text[i])
+                # print(pred_text[i])
                 char_list.append(characters[pred_text[i]])
         return u''.join(char_list)
 

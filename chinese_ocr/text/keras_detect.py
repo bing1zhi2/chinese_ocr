@@ -5,7 +5,7 @@ Reference: https://github.com/qqwweee/keras-yolo3.git
 from config.config import kerasTextModel,IMGSIZE,keras_anchors,class_names,GPU,GPUID
 from text.keras_yolo3 import yolo_text,box_layer,K
 
-from apphelper.image import resize_im,letterbox_image
+from utils.image import resize_im,letterbox_image
 from PIL import Image
 import numpy as np
 import tensorflow as tf
