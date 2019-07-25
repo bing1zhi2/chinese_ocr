@@ -34,6 +34,8 @@ put your dataset into train/images and change the label file data_test.txt data_
 or you can generate your own dataset
 
 https://github.com/JarveeLee/SynthText_Chinese_version
+https://github.com/Belval/TextRecognitionDataGenerator
+https://github.com/Sanster/text_renderer
 
 # things to do
 1. use pretrain model to detect word
