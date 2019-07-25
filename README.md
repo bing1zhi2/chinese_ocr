@@ -22,12 +22,24 @@ you can also see [understand_detect](https://github.com/bing1zhi2/chinese_ocr/bl
 `python train.py`
 
 ## train on your own dataset
+you can use YCG09's dataset to train,url:
+
+url：https://pan.baidu.com/s/1QkI7kjah8SPHwOQ40rS1Pw (passwd：lu7m)
+
+
 put your dataset into train/images and change the label file data_test.txt data_train.txt
+
+
+## generate you own dataset
+or you can generate your own dataset
+
+https://github.com/JarveeLee/SynthText_Chinese_version
 
 # things to do
 1. use pretrain model to detect word
    * add demo   &radic;
    * add densenet training code &radic;
+   * generate my own dataset
  
 2. add framework to easy train on your own dataset
    * add yolo3 train code
