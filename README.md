@@ -65,11 +65,11 @@ put your dataset into train/images and change the label file data_test.txt data_
 
 ## generate you own dataset
 or you can generate your own dataset:
-### text location:
+* text location:    
 [SynthText](https://github.com/JarveeLee/SynthText_Chinese_version) 
-### text recognition
+* text recognition  
 [TextRecognitionDataGenerator](https://github.com/Belval/TextRecognitionDataGenerator)   
-[text_renderer](https://github.com/Sanster/text_renderer)  (which one I used )
+[text_renderer](https://github.com/Sanster/text_renderer)  (which one I used )  
 you can use tools/tmp_label_to_id_label.py to change label file format to what we need here
 
 
