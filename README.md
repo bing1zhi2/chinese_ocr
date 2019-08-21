@@ -1,5 +1,5 @@
 # chinese_ocr
-yolo3 + densenet ocr
+yolo3 + densenet + ctc ocr
 
 # setup 
 see setup
