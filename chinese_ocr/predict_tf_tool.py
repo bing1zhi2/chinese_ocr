@@ -10,8 +10,8 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 
-from densenet import keys
-from densenet import densenet
+from densenet_common import keys
+from densenet_common import densenet
 from config.use_model_config import DENSENET_MODEL_DIR
 
 model_dir = DENSENET_MODEL_DIR

@@ -22,7 +22,7 @@ from keras.optimizers import SGD, Adam
 from keras.models import Model
 from keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard
 
-import densenet
+from chinese_ocr.densenet_common import densenet
 
 # 训练图片的宽高
 img_h = 32
