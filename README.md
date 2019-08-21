@@ -33,9 +33,13 @@ or you can use [train_with_param](https://github.com/bing1zhi2/chinese_ocr/blob/
 
 
 
-## train on dataset
-the dataset is uploading ...    
-the dataset contains 800,000 pictures 
+## dataset
+this dataset is generate by code.
+
+link：https://pan.baidu.com/s/1JgS1gSRcfnjWF_epU-E2vA 
+password：wigu 
+  
+The dataset contains 800,000 pictures 
 300,000 from chinese novel  
 100,000 from random number 0-9    
 100,000 from random code    
@@ -48,8 +52,8 @@ the dataset contains 800,000 pictures
 * noise(gauss,uniform,salt_pepper,poisson)
 * ...
 
+for more detial see [train_with_param](https://github.com/bing1zhi2/chinese_ocr/blob/master/chinese_ocr/train_use_new_dataset.py) 
 
-Uploading takes times....
 
 Or you can use YCG09's dataset to train,url:
 
