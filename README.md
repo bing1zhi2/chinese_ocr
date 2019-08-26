@@ -5,10 +5,14 @@ yolo3 + densenet + ctc ocr
 see setup
 
 # dowon model 
+* densenet model
 url：https://pan.baidu.com/s/1gm0Uq_sLe00En-IbUPiQUg 
-password ：qcco 
-
+password ：qcco  
 put the model file in project_root/chinese_ocr/models/densenet_base_model/1
+* model
+url: https://pan.baidu.com/s/10t5BYHm-YJXb9NpT7OnIOg    
+password: 8zbx  
+put the model file in project_root/chinese_ocr/models/
 
 # test
 `python demo.py`
