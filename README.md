@@ -5,11 +5,15 @@ yolo3 + densenet + ctc ocr
 see setup
 
 # dowon model 
-* densenet model
+* densenet model used for 5990 chars    
 url：https://pan.baidu.com/s/1gm0Uq_sLe00En-IbUPiQUg 
 password ：qcco  
 put the model file in project_root/chinese_ocr/models/densenet_base_model/1
-* model
+
+* densenet model used for 7476 chars    
+  to be uploaded
+
+* other model
 url: https://pan.baidu.com/s/10t5BYHm-YJXb9NpT7OnIOg    
 password: 8zbx  
 put the model file in project_root/chinese_ocr/models/
