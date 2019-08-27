@@ -22,6 +22,7 @@ class Dataset(object):
         # self.class_info = [{"source": "", "id": 0, "name": ""}]
         self.class_info = []
         self.source_class_ids = {}
+        self.char_set_line = ""  # 字典用一行文本表示
 
     def add_class(self, source, class_id, class_name):
         assert "." not in source, "Source name cannot contain a dot"
@@ -99,7 +100,7 @@ class Dataset(object):
         """
         return self.class_from_source_map[source_class_id]
 
-    def map_source_image_id(self,source_imagename):
+    def map_source_image_id(self, source_imagename):
         return self.image_from_source_map[source_imagename]
 
     def get_source_class_id(self, class_id, source):
@@ -147,6 +148,3 @@ class Dataset(object):
         """
         class_ids = np.empty([0], np.int32)
         return class_ids
-
-
-

@@ -35,6 +35,7 @@ class DataSetSynthtext(Dataset):
             char_set_temp.append(one_word)
 
         char_set_line = ''.join(char_set_temp[1:] + ['卍'])
+        self.char_set_line = char_set_line
 
         # char_set = ''.join([ch.strip('\n') for ch in char_set][1:] + ['卍'])
         # print(char_set)

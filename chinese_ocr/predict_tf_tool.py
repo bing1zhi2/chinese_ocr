@@ -10,18 +10,19 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 
-from densenet_common import keys
+# from densenet_common import keys
 from densenet_common import densenet
-from config.use_model_config import DENSENET_MODEL_DIR
+from densenet_common.key_common import DictKey
+from config.use_model_config import inference_config
 
-model_dir = DENSENET_MODEL_DIR
-input_file = "demo.jpg"
+# model_dir = DENSENET_MODEL_DIR
 
 reload(densenet)
 
-characters = keys.alphabet[:]
-characters = characters[1:] + u'卍'
-nclass = len(characters)
+# characters = keys.alphabet[:]
+# characters = characters[1:] + u'卍'
+# nclass = len(characters)
+
 
 """
 signature_def['predict_images']:
@@ -38,8 +39,15 @@ outputs['prediction'] tensor_info:
 Method name is: tensorflow/serving/predict
 
 """
+
+
 class DensenetOcr:
-    def __init__(self):
+    def __init__(self, class_file_path=None, model_name="5990_model"):
+        dk = DictKey(class_file_path)
+        self.chars = dk.keys
+        self.class_num = len(self.chars)
+        self.config = inference_config[model_name]
+
         self.run_func = self.loadmodel()
 
     def loadmodel(self):
@@ -49,9 +57,9 @@ class DensenetOcr:
                 return self.run_lamada(sess)
 
     def run_lamada(self, sess):
-        print("loading ocr model from " + model_dir+"...............")
+        print("loading ocr model from " + self.config.DENSENET_MODEL_DIR + "...............")
         metagraph_def = tf.saved_model.loader.load(
-            sess, [tf.saved_model.tag_constants.SERVING], model_dir)
+            sess, [tf.saved_model.tag_constants.SERVING], self.config.DENSENET_MODEL_DIR)
         # print(metagraph_def)
 
         signature_def = metagraph_def.signature_def[
@@ -60,6 +68,9 @@ class DensenetOcr:
             signature_def.inputs['images'].name)
         output_tensor = sess.graph.get_tensor_by_name(
             signature_def.outputs['prediction'].name)
+
+        s1, s2, s3 = output_tensor.shape
+        assert s3 == self.class_num, "model classnum isn't equal dict class num"
 
         run_func = lambda images: output_tensor.eval(session=sess, feed_dict={input_tensor: images})
 
@@ -101,10 +112,10 @@ class DensenetOcr:
         char_list = []
         pred_text = pred.argmax(axis=2)[0]
         for i in range(len(pred_text)):
-            if pred_text[i] != nclass - 1 and (
+            if pred_text[i] != self.class_num - 1 and (
                     (not (i > 0 and pred_text[i] == pred_text[i - 1])) or (i > 1 and pred_text[i] == pred_text[i - 2])):
-                # print(pred_text[i])
-                char_list.append(characters[pred_text[i]])
+                print(pred_text[i])
+                char_list.append(self.chars[pred_text[i]])
         return u''.join(char_list)
 
     def img_2_id(self, img):
@@ -129,11 +140,10 @@ class DensenetOcr:
         id_list = []
         pred_text = pred.argmax(axis=2)[0]
         for i in range(len(pred_text)):
-            if pred_text[i] != nclass - 1 and (
+            if pred_text[i] != self.class_num - 1 and (
                     (not (i > 0 and pred_text[i] == pred_text[i - 1])) or (i > 1 and pred_text[i] == pred_text[i - 2])):
                 id_list.append(pred_text[i])
         return id_list
-
 
     def id_to_char(self, id_list):
         """
@@ -143,6 +153,9 @@ class DensenetOcr:
         """
         char_list = []
         for i in range(len(id_list)):
-            char_list.append(characters[id_list[i]])
+            char_list.append(self.chars[id_list[i]])
         return u''.join(char_list)
 
+
+
+# a = DensenetOcr("/media/chenhao/study/code/work/github/chinese_ocr/chinese_ocr/train/char_7476.txt")

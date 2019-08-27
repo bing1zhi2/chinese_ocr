@@ -10,7 +10,7 @@ import cv2
 import model
 from utils.image import union_rbox, adjust_box_to_origin
 from utils.image import get_boxes, letterbox_image
-from global_obj import ocr_predict
+from global_obj import ocr_predict, ocr_predict_7476
 from config.config import opencvFlag, GPU, IMGSIZE, ocrFlag
 
 
@@ -156,4 +156,15 @@ def test_img4():
     print("done")
 
 
-test_img1()
+def test_7476_model():
+    # detectAngle = False
+    path = "test_images/00000000.jpg"
+
+    img = cv2.imread(path)  ##GBR
+    # 单行识别 one line
+    partImg = Image.fromarray(img)
+    text2 = ocr_predict_7476.recognize(partImg.convert('L'))
+    print(text2)
+
+test_7476_model()
+

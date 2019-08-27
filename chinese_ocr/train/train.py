@@ -122,6 +122,13 @@ def ctc_lambda_func(args):
     return K.ctc_batch_cost(labels, y_pred, input_length, label_length)
 
 
+def get_lr_metric(optimizer):
+    def lr(y_true, y_pred):
+        return optimizer.lr
+
+    return lr
+
+
 def get_model(img_h, nclass):
     input = Input(shape=(img_h, None, 1), name='the_input')
     y_pred = densenet.dense_cnn(input, nclass)
@@ -135,8 +142,12 @@ def get_model(img_h, nclass):
 
     loss_out = Lambda(ctc_lambda_func, output_shape=(1,), name='ctc')([y_pred, labels, input_length, label_length])
 
+    optimizer = Adam(lr=0.001)
+    lr_metric = get_lr_metric(optimizer)
+
     model = Model(inputs=[input, labels, input_length, label_length], outputs=loss_out)
-    model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer='adam', metrics=['accuracy'])
+    # model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer='adam', metrics=['accuracy'])
+    model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=optimizer, metrics=['accuracy', lr_metric])
 
     return basemodel, model
 
@@ -156,12 +167,15 @@ if __name__ == '__main__':
         basemodel.load_weights(modelPath)
         print('done!')
 
-    train_loader = gen('data_train.txt', './images', batchsize=batch_size, maxlabellength=maxlabellength, imagesize=(img_h, img_w))
-    test_loader = gen('data_test.txt', './images', batchsize=batch_size, maxlabellength=maxlabellength, imagesize=(img_h, img_w))
+    train_loader = gen('data_train.txt', './images', batchsize=batch_size, maxlabellength=maxlabellength,
+                       imagesize=(img_h, img_w))
+    test_loader = gen('data_test.txt', './images', batchsize=batch_size, maxlabellength=maxlabellength,
+                      imagesize=(img_h, img_w))
 
     # checkpoint = ModelCheckpoint(filepath='./models/weights_densenet-{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=False, save_weights_only=True)
-    checkpoint = ModelCheckpoint(filepath='./models/weights_densenet-{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=False)
-    lr_schedule = lambda epoch: 0.0005 * 0.4**epoch
+    checkpoint = ModelCheckpoint(filepath='./models/weights_densenet-{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss',
+                                 save_best_only=False)
+    lr_schedule = lambda epoch: 0.0005 * 0.4 ** epoch
     learning_rate = np.array([lr_schedule(i) for i in range(10)])
     changelr = LearningRateScheduler(lambda epoch: float(learning_rate[epoch]))
     earlystop = EarlyStopping(monitor='val_loss', patience=2, verbose=1)
@@ -169,11 +183,11 @@ if __name__ == '__main__':
 
     print('-----------Start training-----------')
     model.fit_generator(train_loader,
-    	# steps_per_epoch = 3607567 // batch_size,
-    	steps_per_epoch = 100 // batch_size,
-    	epochs = 10,
-    	initial_epoch = 0,
-    	validation_data = test_loader,
-    	# validation_steps = 36440 // batch_size,
-    	validation_steps = 100 // batch_size,
-    	callbacks = [checkpoint, earlystop, changelr, tensorboard])
+                        # steps_per_epoch = 3607567 // batch_size,
+                        steps_per_epoch=100 // batch_size,
+                        epochs=10,
+                        initial_epoch=0,
+                        validation_data=test_loader,
+                        # validation_steps = 36440 // batch_size,
+                        validation_steps=100 // batch_size,
+                        callbacks=[checkpoint, earlystop, changelr, tensorboard])

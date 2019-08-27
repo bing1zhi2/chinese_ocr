@@ -36,11 +36,13 @@ def data_generator(dataset, config, maxlabellength=10):
         shufimagefile = dataset._image_ids[r_n.get(batch_size)]
 
         # print('shufimagefile:', shufimagefile)
+        image_paths =[]
         for i, j in enumerate(shufimagefile):
             # image_id = dataset.map_source_image_id("Synthtext" + '.' + j)
             image_id = j
 
             image_path = dataset.image_info[image_id]["path"]
+            image_paths.append(image_path)
             img1 = Image.open(image_path).convert('L')
             img = np.array(img1, 'f') / 255.0 - 0.5
 
@@ -58,6 +60,7 @@ def data_generator(dataset, config, maxlabellength=10):
                   'the_labels': labels,
                   'input_length': input_length,
                   'label_length': label_length,
+                  'img_paths': image_paths,
                   }
         outputs = {'ctc': np.zeros([batch_size])}
         yield (inputs, outputs)
@@ -71,6 +74,8 @@ class DensenetModel:
         """
         self.config = config
         self.model_dir = model_dir
+
+
 
     def train(self, train_dataset, val_dataset, epochs, learning_rate=None,
               pre_train_path=None, checkpoint_path=None, no_augmentation_sources=None):
@@ -97,11 +102,17 @@ class DensenetModel:
         # checkpoint = ModelCheckpoint(filepath='./models/weights_densenet-{epoch:02d}-{val_loss:.2f}.h5', monitor='val_loss', save_best_only=False, save_weights_only=True)
         checkpoint = ModelCheckpoint(filepath='./models/weights_densenet-{epoch:02d}-{val_loss:.2f}.h5',
                                      monitor='val_loss', save_best_only=False)
-        lr_schedule = lambda epoch: 0.0005 * 0.4 ** epoch
-        learning_rate = np.array([lr_schedule(i) for i in range(10)])
-        changelr = LearningRateScheduler(lambda epoch: float(learning_rate[epoch]))
-        earlystop = EarlyStopping(monitor='val_loss', patience=2, verbose=1)
+
+        # lr_schedule = lambda epoch: 0.0005 * 0.4 ** epoch
+        # learning_rate = np.array([lr_schedule(i) for i in range(10)])
+        # changelr = LearningRateScheduler(lambda epoch: float(learning_rate[epoch]))
+
+        changelr = LearningRateScheduler(lambda epoch: 0.001 * 0.4 ** (epoch // 2))
+
+        earlystop = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
         tensorboard = TensorBoard(log_dir='./models/logs', write_graph=True)
+
+
 
 
 
