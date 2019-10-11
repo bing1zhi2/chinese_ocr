@@ -13,6 +13,7 @@ put the model file in project_root/chinese_ocr/models/densenet_base_model/1
 * densenet model used for 7476 chars    
 url：https://pan.baidu.com/s/1_eGdF9odvzziJn35wOzQlA 
 password ：jve5 
+put the model file in project_root/chinese_ocr/models/densenet_base_model/2
 
 
 * other model
