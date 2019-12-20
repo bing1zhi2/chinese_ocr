@@ -21,6 +21,10 @@ url: https://pan.baidu.com/s/10t5BYHm-YJXb9NpT7OnIOg
 password: 8zbx  
 put the model file in project_root/chinese_ocr/models/
 
+#### 模型效果
+目前提供的模型只适合学习使用，只用当前代码在生成的数据集上训练了很多轮保存的最好的一个版本，但不足以商用，
+你可以自己用代码训练更好的模型，参考白翔老师的crnn也是个不错的选择
+
 # test
 `python demo.py`
 
